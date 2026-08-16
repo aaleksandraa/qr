@@ -29,7 +29,7 @@ npm run build
 php artisan serve
 ```
 
-Default seeder account: `admin@example.com` / `password`.
+Default seeder admin: `aleksandra@wizionar.com` / `password`.
 
 Local short URLs: `http://localhost:8000/r/{slug}`.
 

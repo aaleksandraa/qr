@@ -16,14 +16,27 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        User::query()
+            ->where('email', 'admin@example.com')
+            ->update([
+                'email' => 'aleksandra@wizionar.com',
+                'name' => 'Aleksandra',
+                'role' => UserRole::Admin,
+            ]);
+
         $user = User::query()->firstOrCreate(
-            ['email' => 'admin@example.com'],
+            ['email' => 'aleksandra@wizionar.com'],
             [
-                'name' => 'Administrator',
+                'name' => 'Aleksandra',
                 'password' => 'password',
                 'role' => UserRole::Admin,
+                'email_verified_at' => now(),
             ],
         );
+
+        if ($user->role !== UserRole::Admin) {
+            $user->forceFill(['role' => UserRole::Admin])->save();
+        }
 
         $milica = User::query()->firstOrCreate(
             ['email' => 'zu.dr.brkic@gmail.com'],
