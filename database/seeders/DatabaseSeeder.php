@@ -25,8 +25,20 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        if ($user->wasRecentlyCreated || $user->workspaces()->doesntExist()) {
-            app(\App\Services\Workspace\WorkspaceService::class)->provisionDefaultWorkspace($user);
+        $milica = User::query()->firstOrCreate(
+            ['email' => 'zu.dr.brkic@gmail.com'],
+            [
+                'name' => 'Milica Delić',
+                'password' => 'BrkicDoboj2026!',
+                'role' => UserRole::User,
+                'email_verified_at' => now(),
+            ],
+        );
+
+        foreach ([$user, $milica] as $account) {
+            if ($account->wasRecentlyCreated || $account->workspaces()->doesntExist()) {
+                app(\App\Services\Workspace\WorkspaceService::class)->provisionDefaultWorkspace($account);
+            }
         }
 
         $workspace = $user->fresh()->currentWorkspace();
